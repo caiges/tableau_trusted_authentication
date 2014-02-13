@@ -1,6 +1,6 @@
-# TableauTrustedAuth
+# Tableau Trusted Authentication
 
-TODO: Write a gem description
+This library provides a simple wrapper around the HTTP calls required for using Tableau's truated authentication mechanism. You can use the `url` method of the View class to get a authenticated url to use when redirecting or embedding views.
 
 ## Installation
 
@@ -18,7 +18,29 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Rails Controller
+
+If you wanted to redirect a user to the Tableau View `/views/awesomeworkbook/reallygoodview` you could do something like the following:
+
+```ruby
+view = TableauTrustedAuth::View.new 'tableau-server-hostname-or-ip', 'tableau-user-to-authenticate-as'
+redirect_to view.url('awesomeworkbook/reallygoodview')
+```
+
+### IFrame
+
+In your controller:
+
+```ruby
+view = TableauTrustedAuth::View.new 'tableau-server-hostname-or-ip', 'tableau-user-to-authenticate-as'
+@url = view.url('awesomeworkbook/reallygoodview')
+```
+
+In your view:
+
+```html
+<iframe src="#{@url}"></iframe>
+```
 
 ## Contributing
 
