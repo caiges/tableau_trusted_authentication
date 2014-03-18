@@ -5,20 +5,20 @@ module TableauTrustedAuth
   class View
     include HTTParty
 
-    def initialize(server_address, username)
+    def initialize(server_address, params = {})
       self.class.base_uri server_address
       @server_address = server_address
-      @username = username
+      @params = params
     end
 
     def get_ticket
-      resp = self.class.post '/trusted', { query: { username: @username } }
+      resp = self.class.post '/trusted', { query: @params }
       @unique_id = resp
     end
 
     def url(url)
       get_ticket
-      "#{self.class.base_uri}/trusted/#{@unique_id}/views/#{url}"
+      "#{self.class.base_uri}/trusted/#{@unique_id}/#{url}"
     end
   end
 end
